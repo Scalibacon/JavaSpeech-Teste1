@@ -6,6 +6,7 @@
 
 grammar grammar;
 
+public <commands> = ( open first | write below );
 public <feelings>  = ( how are you | say hello | nice);
 public <voices>  = ( change to voice one  | change to voice two | change to voice three );
 public <amazing>  = ( say amazing | what day is today );
