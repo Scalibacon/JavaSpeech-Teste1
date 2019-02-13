@@ -38,7 +38,7 @@ public class MainTeste {
 		// Se não for usar grammar se sim todas as palavras, comentar as 3 linhas
 		// abaixo, além de liberar a de cima
 		configuration.setGrammarPath("resource:/grammars"); // seta o caminho onde há o grammar
-		configuration.setGrammarName("grammar2"); // seta o nome do grammar (acho que deve ser o nome do arquivo)
+		configuration.setGrammarName("grammar"); // seta o nome do grammar (acho que deve ser o nome do arquivo)
 		configuration.setUseGrammar(true); // mostra se vai usar ou não o grammar
 
 		try {
@@ -80,7 +80,6 @@ public class MainTeste {
 								System.out.println("You said: [" + speechRecognitionResult + "]\n"); //mostra o que foi dito (?)
 								
 								//makeDecision(speechRecognitionResult, speechResult.getWords()); //aplicaria um método sobre as palavras
-								doAnAction(speechRecognitionResult);
 							}
 						} else {
 							logger.log(Level.INFO, "Ingoring Speech Recognition Results..."); //mostra que está ignorando
@@ -105,16 +104,6 @@ public class MainTeste {
 		ignoreSpeechRecognitionResults = true; //começa a ignorar o resultado sem parar o processo
 	}
 	
-	public synchronized void stopRecognition() {
-		if(!eventsExecutorService.isShutdown()) {
-			eventsExecutorService.shutdownNow();
-			System.out.println("Leitura de comandos de voz interrompida");
-			ignoreSpeechRecognitionResults();
-			speechRecognizerThreadRunning = false;
-			resourcesThreadRunning = false;
-		}
-	}
-	
 	//thread que verifica a disponibilidade dos recursos
 	public synchronized void startResourcesThread() {
 		
@@ -130,12 +119,11 @@ public class MainTeste {
 						if (!AudioSystem.isLineSupported(Port.Info.MICROPHONE)) //se o microfone não estiver disponível
 							logger.log(Level.INFO, "Microphone is not available.\n"); //exibe a indisponibilidade
 						
-							Thread.sleep(350); //dá uma pausa estratégica xD						
+						Thread.sleep(350); //dá uma pausa estratégica xD
 					}
 					
 				} catch (InterruptedException e) { //pega erros relacionados ao sleep da thread
-					//logger.log(Level.WARNING, null, e);
-					Thread.currentThread().interrupt();
+					logger.log(Level.WARNING, null, e);
 					resourcesThreadRunning = false; //seta que a threado parou
 				}
 				
@@ -148,12 +136,6 @@ public class MainTeste {
 	
 	public boolean getSpeechRecognizerThreadRunning() {
 		return speechRecognizerThreadRunning; //retorna se o reconhecimento está rodando ou não
-	}
-	
-	public void doAnAction(String oQueFoiFalado) {
-		if(oQueFoiFalado.equals("stop all")) {
-			stopRecognition();
-		}
 	}
 	
 	// inicia a classe no main
