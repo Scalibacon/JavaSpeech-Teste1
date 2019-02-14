@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import model.ThreadVoz;
 import view.TelaColorida;
 
 public class TelaColoridaController implements ActionListener{
@@ -22,7 +23,19 @@ public class TelaColoridaController implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
-		btnLigaVoz.setText("Listening...");
+		mudarCor();
+	}
+	
+	public void mudarCor() {
+		ThreadVoz threadVoz = new ThreadVoz(btnLigaVoz);
+		threadVoz.start();
+		try {
+			threadVoz.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println(ThreadVoz.resultadoDoReconhecedor);
+		System.out.println("**** CABOU ****");
 	}
 
 }
