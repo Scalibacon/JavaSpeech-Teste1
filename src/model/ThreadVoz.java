@@ -3,20 +3,25 @@ package model;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.SwingWorker;
 
+import controller.TelaColoridaController;
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.LiveSpeechRecognizer;
 import edu.cmu.sphinx.api.SpeechResult;
 
-public class ThreadVoz extends Thread{
+public class ThreadVoz extends SwingWorker<Object, Object>{
 
 	private LiveSpeechRecognizer reconhecedor;
 	public static String resultadoDoReconhecedor;
 	private boolean reconhecedorRodando = false;
+	private TelaColoridaController tela;
 	private JButton btnLigaVoz;
 	
-	public ThreadVoz(JButton btnLigaVoz) {
+	public ThreadVoz(TelaColoridaController tela, JButton btnLigaVoz) {
 		this.btnLigaVoz = btnLigaVoz;
+		this.tela = tela;
+		
 		Configuration configuracao = new Configuration();
 		configuracao.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
 		configuracao.setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
@@ -34,13 +39,10 @@ public class ThreadVoz extends Thread{
 		if(reconhecedorRodando)
 			System.out.println("Reconhecedor já foi iniciado");
 		else {
-			reconhecedorRodando = true;			
+			reconhecedorRodando = true;				
 			reconhecedor.startRecognition(true);
-			//btnLigaVoz.setText("Ouvindo...");
-			ThreadAttBotao att = new ThreadAttBotao(btnLigaVoz);
-			att.execute();
-			System.out.println("Ouvindo...");
-			
+			btnLigaVoz.setText("Ouvindo...");
+			System.out.println("Ouvindo...");			
 			try {
 				while(reconhecedorRodando) {
 					SpeechResult resultadoDaFala = reconhecedor.getResult();
@@ -50,6 +52,7 @@ public class ThreadVoz extends Thread{
 						resultadoDoReconhecedor = resultadoDaFala.getHypothesis();
 						System.out.println("Você disse '" + resultadoDoReconhecedor + "'");	
 						reconhecedorRodando = false; //Depois verificar se irá sair antes da hora
+						tela.executaComandoPorVoz(resultadoDoReconhecedor);
 					}
 				}
 			} catch(Exception e) {
@@ -60,8 +63,9 @@ public class ThreadVoz extends Thread{
 		}
 	}
 	
-	public void run() {
-		iniciarReconhecedor();
+	public Object doInBackground() throws Exception {
+		iniciarReconhecedor();		
+		return null;
 	}	
 
 }

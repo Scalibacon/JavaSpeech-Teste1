@@ -1,7 +1,6 @@
 package controller;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,10 +10,10 @@ import javax.swing.JPanel;
 import model.ThreadVoz;
 import view.TelaColorida;
 
-public class TelaColoridaController implements ActionListener{
-	private TelaColorida tela;
-	private JButton btnLigaVoz;
-	private JPanel container;
+public class TelaColoridaController implements ActionListener /*extends alguma_abstrata*/{
+	public TelaColorida tela;
+	public JButton btnLigaVoz;
+	public JPanel container;
 	
 	public TelaColoridaController(TelaColorida tela, JButton btnLigaVoz, JPanel container){
 		this.tela = tela;
@@ -27,15 +26,13 @@ public class TelaColoridaController implements ActionListener{
 	}
 	
 	public void mudarCor() {
-		ThreadVoz threadVoz = new ThreadVoz(btnLigaVoz);
-		threadVoz.start();
-		try {
-			threadVoz.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		System.out.println(ThreadVoz.resultadoDoReconhecedor);
-		System.out.println("**** CABOU ****");
+		btnLigaVoz.setText("Carregando...");
+		ThreadVoz threadVoz = new ThreadVoz(this, btnLigaVoz);
+		threadVoz.execute();
+	}
+	
+	public void executaComandoPorVoz(String oQueFoiFalado) {
+		container.setBackground(new Color(50, 121, 255));
 	}
 
 }
