@@ -1,6 +1,0 @@
-#JSGF V1.0;
-
-grammar grammar;
-
-public <commands> = ( open first | write below | stop all | close | goodbye | change to blue | change to red | change to green );                   
- /* public <syntax> = <number>{1} (plus | minus | multiply | division){1} <number>{1}; */

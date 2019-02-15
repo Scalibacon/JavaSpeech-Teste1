@@ -33,7 +33,14 @@ public class TelaColoridaController extends ControladaPorVoz implements ActionLi
 	}
 	
 	public void executaComandoPorVoz(String oQueFoiFalado) {
-		container.setBackground(new Color(50, 121, 255));
+		if(oQueFoiFalado.equals("change color to blue"))
+			container.setBackground(new Color(0, 0, 255));
+		else
+		if(oQueFoiFalado.equals("change color to red"))
+			container.setBackground(new Color(255, 0, 0));
+		else
+		if(oQueFoiFalado.equals("change color to green"))
+			container.setBackground(new Color(0, 255, 0));
 	}
 
 }

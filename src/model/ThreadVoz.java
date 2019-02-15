@@ -16,51 +16,56 @@ public class ThreadVoz extends SwingWorker<Object, Object>{
 	private boolean reconhecedorRodando = false;
 	private ControladaPorVoz tela;
 	private JButton btnLigaVoz;
+	Configuration configuracao;
 	
 	public ThreadVoz(ControladaPorVoz tela, JButton btnLigaVoz) {
 		this.btnLigaVoz = btnLigaVoz;
 		this.tela = tela;
 		
-		Configuration configuracao = new Configuration();
+		configuracao = new Configuration();
 		configuracao.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
 		configuracao.setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
 		configuracao.setGrammarPath("resource:/grammars");
 		configuracao.setGrammarName("grammar");
 		configuracao.setUseGrammar(true);
-		try {
-			reconhecedor = new LiveSpeechRecognizer(configuracao);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void iniciarReconhecedor() {
+		try {
+			reconhecedor = new LiveSpeechRecognizer(configuracao);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}	
 		if(reconhecedorRodando)
 			System.out.println("Reconhecedor já foi iniciado");
 		else {
 			reconhecedorRodando = true;				
 			reconhecedor.startRecognition(true);
+			System.out.println("aqui");;
 			btnLigaVoz.setText("Ouvindo...");
 			System.out.println("Ouvindo...");			
 			try {
-				while(reconhecedorRodando) {
-					SpeechResult resultadoDaFala = reconhecedor.getResult();
-					if (resultadoDaFala == null)
-						System.out.println("Não consegui entender o que você falou :(");
-					else {
-						resultadoDoReconhecedor = resultadoDaFala.getHypothesis();
-						System.out.println("Você disse '" + resultadoDoReconhecedor + "'");	
-						reconhecedorRodando = false; //Depois verificar se irá sair antes da hora
-						tela.executaComandoPorVoz(resultadoDoReconhecedor);
-					}
-				}
+//				while(reconhecedorRodando) {
+//					SpeechResult resultadoDaFala = reconhecedor.getResult();
+//					if (resultadoDaFala == null)
+//						System.out.println("Não consegui entender o que você falou :(");
+//					else {
+//						resultadoDoReconhecedor = resultadoDaFala.getHypothesis();
+//						System.out.println("Você disse '" + resultadoDoReconhecedor + "'");	
+//						reconhecedorRodando = false; //Depois verificar se irá sair antes da hora
+//						tela.executaComandoPorVoz(resultadoDoReconhecedor);
+//					}
+				
+			tela.executaComandoPorVoz("change color to red");
+			System.out.println("foi");
 			} catch(Exception e) {
 				e.printStackTrace();
 				reconhecedorRodando = false;
 			}
 			System.out.println("Espero ter te ajudado :)");
-			btnLigaVoz.setText("START");
+			reconhecedor.stopRecognition();
 		}
+		btnLigaVoz.setText("START");
 	}
 	
 	public Object doInBackground() throws Exception {
