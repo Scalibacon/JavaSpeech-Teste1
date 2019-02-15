@@ -7,10 +7,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import model.ControladaPorVoz;
 import model.ThreadVoz;
 import view.TelaColorida;
 
-public class TelaColoridaController implements ActionListener /*extends alguma_abstrata*/{
+public class TelaColoridaController extends ControladaPorVoz implements ActionListener{
 	public TelaColorida tela;
 	public JButton btnLigaVoz;
 	public JPanel container;

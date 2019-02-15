@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.SwingWorker;
 
-import controller.TelaColoridaController;
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.LiveSpeechRecognizer;
 import edu.cmu.sphinx.api.SpeechResult;
@@ -15,10 +14,10 @@ public class ThreadVoz extends SwingWorker<Object, Object>{
 	private LiveSpeechRecognizer reconhecedor;
 	public static String resultadoDoReconhecedor;
 	private boolean reconhecedorRodando = false;
-	private TelaColoridaController tela;
+	private ControladaPorVoz tela;
 	private JButton btnLigaVoz;
 	
-	public ThreadVoz(TelaColoridaController tela, JButton btnLigaVoz) {
+	public ThreadVoz(ControladaPorVoz tela, JButton btnLigaVoz) {
 		this.btnLigaVoz = btnLigaVoz;
 		this.tela = tela;
 		
@@ -60,6 +59,7 @@ public class ThreadVoz extends SwingWorker<Object, Object>{
 				reconhecedorRodando = false;
 			}
 			System.out.println("Espero ter te ajudado :)");
+			btnLigaVoz.setText("START");
 		}
 	}
 	
