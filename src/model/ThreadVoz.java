@@ -11,37 +11,40 @@ import edu.cmu.sphinx.api.SpeechResult;
 
 public class ThreadVoz extends SwingWorker<Object, Object>{
 
-	private LiveSpeechRecognizer reconhecedor;
-	public static String resultadoDoReconhecedor;
+	private static LiveSpeechRecognizer reconhecedor;
+	private String resultadoDoReconhecedor;
 	private boolean reconhecedorRodando = false;
+	public static boolean limparCacheMic = true;
+	
 	private ControladaPorVoz tela;
 	private JButton btnLigaVoz;
-	Configuration configuracao;
 	
 	public ThreadVoz(ControladaPorVoz tela, JButton btnLigaVoz) {
 		this.btnLigaVoz = btnLigaVoz;
 		this.tela = tela;
 		
-		configuracao = new Configuration();
+		Configuration configuracao = new Configuration();
 		configuracao.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
 		configuracao.setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
 		configuracao.setGrammarPath("resource:/grammars");
 		configuracao.setGrammarName("grammar");
 		configuracao.setUseGrammar(true);
-	}
-	
-	public void iniciarReconhecedor() {
 		try {
-			reconhecedor = new LiveSpeechRecognizer(configuracao);
+			if(limparCacheMic)
+				reconhecedor = new LiveSpeechRecognizer(configuracao);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}	
+	}
+	
+	public void iniciarReconhecedor() {	
 		if(reconhecedorRodando)
 			System.out.println("Reconhecedor já foi iniciado");
 		else {
-			reconhecedorRodando = true;				
-			reconhecedor.startRecognition(true);
-			System.out.println("aqui");;
+			reconhecedorRodando = true;	
+			System.out.println("aqui");
+			reconhecedor.startRecognition(limparCacheMic);
+			limparCacheMic = false;
 			btnLigaVoz.setText("Ouvindo...");
 			System.out.println("Ouvindo...");			
 			try {
@@ -68,7 +71,7 @@ public class ThreadVoz extends SwingWorker<Object, Object>{
 		btnLigaVoz.setText("START");
 	}
 	
-	public Object doInBackground() throws Exception {
+	public Object doInBackground() throws Exception {		
 		iniciarReconhecedor();		
 		return null;
 	}	
