@@ -48,19 +48,17 @@ public class ThreadVoz extends SwingWorker<Object, Object>{
 			btnLigaVoz.setText("Ouvindo...");
 			System.out.println("Ouvindo...");			
 			try {
-//				while(reconhecedorRodando) {
-//					SpeechResult resultadoDaFala = reconhecedor.getResult();
-//					if (resultadoDaFala == null)
-//						System.out.println("Não consegui entender o que você falou :(");
-//					else {
-//						resultadoDoReconhecedor = resultadoDaFala.getHypothesis();
-//						System.out.println("Você disse '" + resultadoDoReconhecedor + "'");	
-//						reconhecedorRodando = false; //Depois verificar se irá sair antes da hora
-//						tela.executaComandoPorVoz(resultadoDoReconhecedor);
-//					}
-				
-			tela.executaComandoPorVoz("change color to red");
-			System.out.println("foi");
+				while(reconhecedorRodando) {
+					SpeechResult resultadoDaFala = reconhecedor.getResult();
+					if (resultadoDaFala == null)
+						System.out.println("Não consegui entender o que você falou :(");
+					else {
+						resultadoDoReconhecedor = resultadoDaFala.getHypothesis();
+						System.out.println("Você disse '" + resultadoDoReconhecedor + "'");	
+						reconhecedorRodando = false; //Depois verificar se irá sair antes da hora
+						tela.executaComandoPorVoz(resultadoDoReconhecedor);
+					}
+				}
 			} catch(Exception e) {
 				e.printStackTrace();
 				reconhecedorRodando = false;

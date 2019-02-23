@@ -26,7 +26,7 @@ public class TelaColorida extends JFrame {
 		setBounds(100, 100, 450, 300);
 		
 		container = new JPanel();
-		container.setBackground(new Color(144, 238, 144));
+		container.setBackground(new Color(177, 177, 177));
 		container.setBorder(new EmptyBorder(5, 5, 5, 5));
 		container.setLayout(null);
 		setContentPane(container);		
