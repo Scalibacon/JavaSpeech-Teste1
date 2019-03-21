@@ -1,7 +1,5 @@
 package model;
 
-public abstract class ControladaPorVoz {
-	public void  executaComandoPorVoz(String oQueFoiFalado) {
-		
-	}
+public interface ControladaPorVoz {
+	void executaComandoPorVoz(String oQueFoiFalado);
 }

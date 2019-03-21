@@ -11,7 +11,7 @@ import model.ControladaPorVoz;
 import model.ThreadVoz;
 import view.TelaColorida;
 
-public class TelaColoridaController extends ControladaPorVoz implements ActionListener{
+public class TelaColoridaController implements ActionListener, ControladaPorVoz{
 	public TelaColorida tela;
 	public JButton btnLigaVoz;
 	public JPanel container;
@@ -22,6 +22,7 @@ public class TelaColoridaController extends ControladaPorVoz implements ActionLi
 		this.container = container;
 	}
 	
+	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		mudarCor();
 	}
@@ -32,6 +33,7 @@ public class TelaColoridaController extends ControladaPorVoz implements ActionLi
 		threadVoz.execute();
 	}
 	
+	@Override
 	public void executaComandoPorVoz(String oQueFoiFalado) {
 		if(oQueFoiFalado.equals("change color to blue"))
 			container.setBackground(new Color(0, 0, 255));
