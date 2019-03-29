@@ -13,7 +13,7 @@ import java.awt.Color;
 public class TelaColorida extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel container;
+	private JPanel panel;
 	private JButton btnLigaVoz;	
 
 	public static void main(String[] args) {
@@ -25,18 +25,34 @@ public class TelaColorida extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
-		container = new JPanel();
-		container.setBackground(new Color(177, 177, 177));
-		container.setBorder(new EmptyBorder(5, 5, 5, 5));
-		container.setLayout(null);
-		setContentPane(container);		
+		panel = new JPanel();
+		panel.setBackground(new Color(177, 177, 177));
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel.setLayout(null);
+		setContentPane(panel);		
 		
 		btnLigaVoz = new JButton("START");
 		btnLigaVoz.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnLigaVoz.setBounds(160, 120, 115, 30);
-		TelaColoridaController telaCtrl = new TelaColoridaController(this, btnLigaVoz, container);
+		TelaColoridaController telaCtrl = new TelaColoridaController(this);
 		btnLigaVoz.addActionListener(telaCtrl);
 		
-		container.add(btnLigaVoz);
+		panel.add(btnLigaVoz);
+	}
+
+	public JButton getBtnLigaVoz() {
+		return btnLigaVoz;
+	}
+
+	public void setBtnLigaVoz(JButton btnLigaVoz) {
+		this.btnLigaVoz = btnLigaVoz;
+	}
+	
+	public JPanel getPanel() {
+		return panel;
+	}
+
+	public void setPanel(JPanel panel) {
+		this.panel = panel;
 	}
 }

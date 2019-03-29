@@ -14,12 +14,12 @@ import view.TelaColorida;
 public class TelaColoridaController implements ActionListener, ControladaPorVoz{
 	public TelaColorida tela;
 	public JButton btnLigaVoz;
-	public JPanel container;
+	public JPanel panel;
 	
-	public TelaColoridaController(TelaColorida tela, JButton btnLigaVoz, JPanel container){
+	public TelaColoridaController(TelaColorida tela){
 		this.tela = tela;
-		this.btnLigaVoz = btnLigaVoz;
-		this.container = container;
+		this.btnLigaVoz = tela.getBtnLigaVoz();
+		this.panel = tela.getPanel();
 	}
 	
 	@Override
@@ -36,13 +36,13 @@ public class TelaColoridaController implements ActionListener, ControladaPorVoz{
 	@Override
 	public void executaComandoPorVoz(String oQueFoiFalado) {
 		if(oQueFoiFalado.equals("change color to blue"))
-			container.setBackground(new Color(0, 0, 255));
+			panel.setBackground(new Color(0, 0, 255));
 		else
 		if(oQueFoiFalado.equals("change color to red"))
-			container.setBackground(new Color(255, 0, 0));
+			panel.setBackground(new Color(255, 0, 0));
 		else
 		if(oQueFoiFalado.equals("change color to green"))
-			container.setBackground(new Color(0, 255, 0));
+			panel.setBackground(new Color(0, 255, 0));
 	}
 
 }

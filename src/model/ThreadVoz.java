@@ -21,8 +21,7 @@ public class ThreadVoz extends SwingWorker<Object, Object>{
 	
 	public ThreadVoz(ControladaPorVoz tela, JButton btnLigaVoz) {
 		this.btnLigaVoz = btnLigaVoz;
-		this.tela = tela;
-		
+		this.tela = tela;		
 		Configuration configuracao = new Configuration();
 		configuracao.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
 		configuracao.setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
